@@ -1,57 +1,41 @@
-OPERATORS = set(['+', '-', '*', '/', '(', ')', '^'])  # set of operators
-
-PRIORITY = {'+':1, '-':1, '*':2, '/':2, '^':3} # dictionary having priorities 
-
- 
-
-def infix_to_postfix(expression): #input expression
-
-    stack = [] # initially stack empty
-
-    output = '' # initially output empty
-
+expression = input()
+class Stack:
+    def __init__(self):
+        self.stack = [] 
+    def push(self, item):
+        self.stack.append(item)
+    def pop(self):
+        return self.stack.pop()
+    def top(self):
+        return self.stack[-1]
+    def is_empty(self):
+        return self.stack == []
     
 
-    for ch in expression:
+def Infix_to_Postfix(expression):
+    op_stack = Stack()
+    operators = ['+', '-', '*', '/']
+    precedence = {'+':1, '-':1, '*':2, '/':2}
+    output = []
+    
+    
+    for n in expression.split():
+        if n.isnumeric():
+            output.append(n)
+        elif n == '(':
+            op_stack.push(n)
+        elif n == ')':
+            while op_stack.top() != '(':
+                output.append(op_stack.pop())
+            op_stack.pop()
+        elif n in operators:
+            while not(op_stack.is_empty()) and op_stack.top() != '(' and precedence[op_stack.top()] >= precedence[n]:
+                output.append(n)
+            op_stack.push(n)
+            
+    while not(op_stack.is_empty()):
+        output.append(op_stack.pop())
+        
+    return ''.join(output)
 
-        if ch not in OPERATORS:  # if an operand then put it directly in postfix expression
-
-            output+= ch
-
-        elif ch=='(':  # else operators should be put in stack
-
-            stack.append('(')
-
-        elif ch==')':
-
-            while stack and stack[-1]!= '(':
-
-                output+=stack.pop()
-
-            stack.pop()
-
-        else:
-
-            # lesser priority can't be on top on higher or equal priority    
-
-             # so pop and put in output   
-
-            while stack and stack[-1]!='(' and PRIORITY[ch]<=PRIORITY[stack[-1]]:
-
-                output+=stack.pop()
-
-            stack.append(ch)
-
-    while stack:
-
-        output+=stack.pop()
-
-    return output
-
- 
-
-expression = input('Enter infix expression')
-
-print('infix expression: ',expression)
-
-print('postfix expression: ',infix_to_postfix(expression))
+print(Infix_to_Postfix(expression))

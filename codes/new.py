@@ -1,2 +1,3 @@
-x = '*'
-print(eval(f'{5}{x}{2}'))
+x = []
+for i in range(len(x)):
+    print('hi')
