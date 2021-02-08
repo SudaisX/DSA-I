@@ -24,4 +24,3 @@ for issue in issues:
 
 while not(helpdesk.is_empty()):
     print(helpdesk.dequeue())
-
