@@ -17,7 +17,6 @@ class Stack:
 #Version 2        
 def Verify(InputString, grammerIndex):
     PDA = Stack()
-    
     def verify(PDA, InputString, grammerIndex, dual_pop, a, b, c, d):
         popped = False
         popped2 = False
