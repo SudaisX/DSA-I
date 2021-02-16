@@ -11,7 +11,6 @@ def add_rows(row1, row2):
 
 def Solve(coeffs):
     length  = len(coeffs)
-    
     #swap until the first element is not 0
     while coeffs[0][0] == 0:
         coeffs.append(coeffs.pop(0))
