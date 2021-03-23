@@ -46,6 +46,14 @@ class Graph:
         for node in self.graph:
             print(f'{node} => In-Degree: {_in[node]}, Out-Degree: {out[node]}')
 
+    # def printIn_OutDegree2(self): later
+    #     out = [len(self.graph[node]) for node in self.graph]
+    #     edges = self.listOfNodes(True)
+    #     for nodes in self.graph:
+    #         for edge in edges:
+    #             if 
+
+
     def printDegree(self): #for undirected graph
         for node in self.graph:
             print(f'{node} => {len(self.graph[node])}')
@@ -112,28 +120,28 @@ class Graph:
         return matrix
 
 
-graph = Graph()
+G = Graph()
 
 nodes = ['BOS', 'ORD', 'JFK', 'DFW', 'MIA', 'SFO', 'LAX']
 edges = [('BOS', 'JFK', 1) , ('BOS', 'MIA', 1), ('BOS', 'SFO', 1), ('JFK', 'BOS', 1), ('JFK', 'SFO', 1), ('JFK', 'MIA', 1), ('JFK', 'DFW', 1), ('ORD', 'MIA', 1), ('ORD', 'DFW', 1), ('MIA', 'DFW', 1), ('MIA', 'LAX', 1), ('DFW', 'ORD', 1), ('DFW', 'SFO', 1), ('DFW', 'LAX', 1), ('SFO', 'LAX', 1), ('LAX', 'ORD', 1)]
 
-graph.addNodes(nodes)
-pprint(graph.displayGraph())
+G.addNodes(nodes)
+pprint(G.displayGraph())
 
-graph.addEdges(edges, True)
-pprint(graph.displayGraph())
+G.addEdges(edges, True)
+pprint(G.displayGraph())
 
-print(graph.listOfNodes())
-print(graph.listOfEdges())
+print(G.listOfNodes())
+print(G.listOfEdges())
 
-#graph.printIn_OutDegree() #fix this method for text 
+#G.printIn_OutDegree() #fix this method for text 
 
-print(graph.getInNeighbours('BOS'))
-print(graph.getOutNeighbours('BOS'))
+print(G.getInNeighbours('BOS'))
+print(G.getOutNeighbours('BOS'))
 
-print(graph.isNeighbour('MIA', 'DFW'))
+print(G.isNeighbour('MIA', 'DFW'))
 
-print(graph.isNeighbour('DFW', 'MIA'))
+print(G.isNeighbour('DFW', 'MIA'))
 
 #G.graph = { 0: [(1, 1), (2, 1)], 1: [(2, 1), (3, 1)], 2: [(4, 1)], 3: [(4, 1), (5, 1)], 4: [(5, 1)], 5: [] }
 #G.graph = { 0: [(1, 1), (2, 1)], 1: [(0, 1), (2, 1), (3, 1)], 2: [(0, 1), (1, 1), (4, 1)], 3: [(1, 1), (4, 1), (5, 1)], 4: [(3, 1), (2, 1), (5, 1)], 5: [(3, 1), (4, 1)] }
