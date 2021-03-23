@@ -37,22 +37,17 @@ class Graph:
         return self.edges
 
     def printIn_OutDegree(self):
-        _in = [0 for i in range(len(self.graph))]
+        _in = {node:0 for node in self.graph}
         out = [len(self.graph[node]) for node in self.graph]
 
         for node in self.graph:
             for edges in self.graph[node]:
                 _in[edges[0]] += 1
+
+        i = 0
         for node in self.graph:
-            print(f'{node} => In-Degree: {_in[node]}, Out-Degree: {out[node]}')
-
-    # def printIn_OutDegree2(self): later
-    #     out = [len(self.graph[node]) for node in self.graph]
-    #     edges = self.listOfNodes(True)
-    #     for nodes in self.graph:
-    #         for edge in edges:
-    #             if 
-
+            print(f'{node} => In-Degree: {_in[node]}, Out-Degree: {out[i]}')
+            i += 1
 
     def printDegree(self): #for undirected graph
         for node in self.graph:
@@ -113,41 +108,12 @@ class Graph:
 
     def display_adj_matrix(self):
         v = len(self.graph)
+        reference = {node:num for num, node in enumerate(self.graph)} #for possible non0integer nodes
+
         matrix = [[0 for i in range(v)] for j in range(v)]
         for node in self.graph:
             for edges in self.graph[node]:
-                matrix[node][edges[0]] = edges[1]
+                matrix[reference[node]][reference[edges[0]]] = edges[-1]
         return matrix
 
-
-G = Graph()
-
-nodes = ['BOS', 'ORD', 'JFK', 'DFW', 'MIA', 'SFO', 'LAX']
-edges = [('BOS', 'JFK', 1) , ('BOS', 'MIA', 1), ('BOS', 'SFO', 1), ('JFK', 'BOS', 1), ('JFK', 'SFO', 1), ('JFK', 'MIA', 1), ('JFK', 'DFW', 1), ('ORD', 'MIA', 1), ('ORD', 'DFW', 1), ('MIA', 'DFW', 1), ('MIA', 'LAX', 1), ('DFW', 'ORD', 1), ('DFW', 'SFO', 1), ('DFW', 'LAX', 1), ('SFO', 'LAX', 1), ('LAX', 'ORD', 1)]
-
-G.addNodes(nodes)
-pprint(G.displayGraph())
-
-G.addEdges(edges, True)
-pprint(G.displayGraph())
-
-print(G.listOfNodes())
-print(G.listOfEdges())
-
-#G.printIn_OutDegree() #fix this method for text 
-
-print(G.getInNeighbours('BOS'))
-print(G.getOutNeighbours('BOS'))
-
-print(G.isNeighbour('MIA', 'DFW'))
-
-print(G.isNeighbour('DFW', 'MIA'))
-
-#G.graph = { 0: [(1, 1), (2, 1)], 1: [(2, 1), (3, 1)], 2: [(4, 1)], 3: [(4, 1), (5, 1)], 4: [(5, 1)], 5: [] }
-#G.graph = { 0: [(1, 1), (2, 1)], 1: [(0, 1), (2, 1), (3, 1)], 2: [(0, 1), (1, 1), (4, 1)], 3: [(1, 1), (4, 1), (5, 1)], 4: [(3, 1), (2, 1), (5, 1)], 5: [(3, 1), (4, 1)] }
-#G.graph = { 0: [(1, 21), (2, 15)], 1: [(0, 21), (2, 10), (3, 70)], 2: [(0, 15), (1, 10), (4, 50)], 3: [(1, 70), (4, 24), (5, 39)], 4: [(3, 24), (2, 50), (5, 99)], 5: [(3, 39), (4, 99)] }
-#G.graph = { 0: [(1, 21), (2, 15)], 1: [(2, 10), (3, 70)], 2: [(4, 50)], 3: [(4, 24), (5, 39)], 4: [(5, 99)], 5: [] }
-
-
-#pprint(G.displayGraph())
-#pprint(G.display_adj_matrix())
+#G = Graph()
