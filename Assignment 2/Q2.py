@@ -25,6 +25,5 @@ def CountInversions(lst):
         return result, inversions
     return MergeSortandCountInversions(lst)[1]
 
-arr2 = [2, 4, 1, 3, 5]
-arr = [1, 20, 6, 4, 5]
-print(CountInversions(arr2))
+arr = [2, 4, 1, 3, 5]
+print(CountInversions(arr))
