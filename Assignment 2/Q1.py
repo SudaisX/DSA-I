@@ -1,6 +1,5 @@
 from pprint import pprint
 
-
 file1 = 'Assignment 2/file1.txt'
 file2 = 'Assignment 2/file2.txt'
 
@@ -104,7 +103,7 @@ def quickSort(lst, col, ascending=True):
         return lst
     else:
         r = len(lst)
-        pivot = randint(0, r-1)
+        pivot = 0 #randint(0, r-1) #or any pivot, provided that (first index <= pivot <= last index)
 
         if ascending:
             left = [lst[i] for i in range(r) if lst[i][col] <= lst[pivot][col] and i != pivot]
@@ -126,6 +125,38 @@ qsorted6 = quickSort(frequencies_file2, 0, False)
 qsorted7 = quickSort(frequencies_file2, 1)
 qsorted8 = quickSort(frequencies_file2, 1, False)
 
-print(msorted1)
-print('\n')
-print(qsorted1)
+# f) Perform an experimental analysis of word-frequency vector computatkion to compare the
+# effectiveness of different sorting algorithms. Use the implemented mergeSort(…) and
+# quickSort(…) with three different pivot selection schemes for comparison on the provided text files
+# file1.txt and file2.txt. (Study textbook section 3.1 for experimental analysis. Visualize the
+# running times with different sorting schemes for each provided text files; you may generate
+# graphs for similar text files as a dataset for the performance analysis of your implementation). 
+
+def analysis_qsort(frequencies, column, ascending=True):
+    from time import time
+    start_time = time()
+    quickSort(frequencies, column, ascending)
+    end_time = time()
+    elapsed_time = end_time - start_time
+    return elapsed_time
+
+def analysis_msort(frequencies, column, ascending=True):
+    from time import time
+    start_time = time()
+    mergeSort(frequencies, column, ascending)
+    end_time = time()
+    elapsed_time = end_time - start_time
+    return elapsed_time
+    
+
+print(
+    'MergeSort               QuickSort[Pivot = 0]', '\n',
+f'{analysis_msort(frequencies_file1, 0, True)} : {analysis_qsort(frequencies_file1, 0, True)} \n',
+f'{analysis_msort(frequencies_file1, 0, False)} : {analysis_qsort(frequencies_file1, 0, False)} \n',
+f'{analysis_msort(frequencies_file1, 1, True)} : {analysis_qsort(frequencies_file1, 1, True)} \n',
+f'{analysis_msort(frequencies_file1, 1, False)} : {analysis_qsort(frequencies_file1, 1, False)} \n',
+f'{analysis_msort(frequencies_file2, 0, True)} : {analysis_qsort(frequencies_file2, 0, True)} \n',
+f'{analysis_msort(frequencies_file2, 0, False)} : {analysis_qsort(frequencies_file2, 0, False)} \n',
+f'{analysis_msort(frequencies_file2, 1, True)} : {analysis_qsort(frequencies_file2, 1, True)} \n',
+f'{analysis_msort(frequencies_file2, 1, False)} : {analysis_qsort(frequencies_file2, 1, False)} \n',
+)

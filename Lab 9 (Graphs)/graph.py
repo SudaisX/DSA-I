@@ -116,38 +116,4 @@ class Graph:
                 matrix[reference[node]][reference[edges[0]]] = edges[-1]
         return matrix
 
-
-# G = Graph()
-
-# nodes = ['BOS', 'ORD', 'JFK', 'DFW', 'MIA', 'SFO', 'LAX']
-# edges = [('BOS', 'JFK', 1) , ('BOS', 'MIA', 1), ('BOS', 'SFO', 1), ('JFK', 'BOS', 1), ('JFK', 'SFO', 1), ('JFK', 'MIA', 1), ('JFK', 'DFW', 1), ('ORD', 'MIA', 1), ('ORD', 'DFW', 1), ('MIA', 'DFW', 1), ('MIA', 'LAX', 1), ('DFW', 'ORD', 1), ('DFW', 'SFO', 1), ('DFW', 'LAX', 1), ('SFO', 'LAX', 1), ('LAX', 'ORD', 1)]
-
-# G.addNodes(nodes)
-# pprint(G.displayGraph())
-
-# G.addEdges(edges, True)
-# pprint(G.displayGraph())
-
-# print(G.listOfNodes())
-# print(G.listOfEdges())
-
-# G.printIn_OutDegree()
-
-# print(G.getInNeighbours('BOS'))
-# print(G.getOutNeighbours('BOS'))
-
-# print(G.isNeighbour('MIA', 'DFW'))
-
-# print(G.isNeighbour('DFW', 'MIA'))
-
-# pprint(G.display_adj_matrix())
-
-#G.graph = { 0: [(1, 1), (2, 1)], 1: [(2, 1), (3, 1)], 2: [(4, 1)], 3: [(4, 1), (5, 1)], 4: [(5, 1)], 5: [] }
-#G.graph = { 0: [(1, 1), (2, 1)], 1: [(0, 1), (2, 1), (3, 1)], 2: [(0, 1), (1, 1), (4, 1)], 3: [(1, 1), (4, 1), (5, 1)], 4: [(3, 1), (2, 1), (5, 1)], 5: [(3, 1), (4, 1)] }
-#G.graph = { 0: [(1, 21), (2, 15)], 1: [(0, 21), (2, 10), (3, 70)], 2: [(0, 15), (1, 10), (4, 50)], 3: [(1, 70), (4, 24), (5, 39)], 4: [(3, 24), (2, 50), (5, 99)], 5: [(3, 39), (4, 99)] }
-#G.graph = { 0: [(1, 21), (2, 15)], 1: [(2, 10), (3, 70)], 2: [(4, 50)], 3: [(4, 24), (5, 39)], 4: [(5, 99)], 5: [] }
-
-
-# pprint(G.displayGraph())
-# pprint(G.display_adj_matrix())
-
+#graph = Graph()

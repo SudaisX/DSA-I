@@ -1,5 +1,3 @@
-from random import randint
-
 def quicksort(lst):
     if len(lst) < 2:
         return lst
