@@ -1,4 +1,16 @@
 from pprint import pprint
+class Queue:
+    def __init__(self):
+        self.q = []   
+    def enQueue(self, item):
+        self.q.append(item) 
+    def deQueue(self):
+        return self.q.pop(0)
+    def front(self):
+        return self.q[0]
+    def is_empty(self):
+        return self.q == []
+
 class Graph:
     def __init__(self):
         self.graph = {}
@@ -117,33 +129,53 @@ class Graph:
 
     def DFS(self, position):
         def DFS_helper(pos):
-            if self.visited[pos]: return
+            if self.visited[self.reference[pos]]: return
             else:
-                self.visited[pos] = True
+                self.visited[self.reference[pos]] = True
                 self.order.append(pos)
                 for neighbour in self.getNeighbours(pos):
                     DFS_helper(neighbour)
-
+        
+        self.reference = {node:num for num, node in enumerate(self.graph)}
         self.visited = [False for i in self.listOfNodes()]
         self.order = []
         DFS_helper(position)
         return self.order
 
-    # def DFS_helper(self, pos):
-    #     if self.visited[pos]: return
-    #     else:
-    #         self.visited[pos] = True
-    #         self.order.append(pos)
-    #         for neighbour in self.getNeighbours(pos):
-    #             self.DFS_helper(neighbour)
+    def isCyclic(self, lst):
+        for node in range(len(lst)):
+            if lst[node] not in self.getOutNeighbours(lst[node-1]):
+                return False
+        return True
 
+    def BFS(self, start, end):
+        pass
 
-#Exercise 1# Depth First Search
+print('----------------------Exercise 1-----------------------') #Depth First Search
+#Algorithm is in the Graph Class
 G1 = Graph()
-nodes = [0, 1, 2, 3, 4, 5]
-edges = [(0,1,1), (0,2,1), (1,2,1), (1,3,1), (2,4,1), (3,4,1), (3,5,1), (4,5,1)]
-G1.addNodes(nodes)
-G1.addEdges(edges, True)
 
-for node in nodes:
-    print(f'Node {node}: {G1.DFS(node)}')
+G1.addNodes([0, 1, 2, 3, 4, 5])
+G1.addEdges([(0,1,1), (0,2,1), (1,2,1), (1,3,1), (2,4,1), (3,4,1), (3,5,1), (4,5,1)], True)
+
+for node in G1.listOfNodes():
+    print(f'If Start Node = {node} : Order of Visited Vertices = {G1.DFS(node)}')
+print()
+
+print('----------------------Exercise 2-----------------------') #Detecing Cycles between list of N airports
+#
+airports = Graph()
+airports.addNodes(['Austin', 'Atlanta', 'Chicago', 'Dallas', 'Denver', 'Houston', 'Washington'])
+airports.addEdges([('Austin', 'Dallas', 200), ('Austin', 'Houston', 160), ('Atlanta', 'Washington', 600), ('Atlanta', 'Houston', 800), ('Chicago', 'Denver', 1000), ('Dallas', 'Austin', 200), ('Dallas', 'Denver', 780), ('Dallas', 'Chicago', 900), ('Denver', 'Chicago', 1000), ('Denver', 'Atlanta', 1400), ('Houston', 'Atlanta', 800), ('Washington', 'Atlanta', 600), ('Washington', 'Dallas', 1300)], True)
+
+print(airports.isCyclic(['Austin','Houston','Atlanta','Washington','Dallas']))
+print(airports.isCyclic(['Austin','Houston','Atlanta','Washington']))
+print()
+
+print('----------------------Exercise 3-----------------------') #Breadth First Search
+#
+G2 = Graph()
+G2.addNodes(['S', 1, 2, 3, 4, 5, 6, 7])
+G2.addEdges([('S',1,1), ('S',2,1), (1,3,1), (1,4,1), (1,5,1), (2,6,1), (6,7,1)], True)
+
+pprint(G2.displayGraph())
