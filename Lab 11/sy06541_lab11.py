@@ -119,7 +119,7 @@ class Graph:
 
     def display_adj_matrix(self):
         v = len(self.graph)
-        reference = {node:num for num, node in enumerate(self.graph)} #for possible non0integer nodes
+        reference = {node:num for num, node in enumerate(self.listOfNodes())} #for possible non0integer nodes
 
         matrix = [[0 for i in range(v)] for j in range(v)]
         for node in self.graph:
@@ -136,7 +136,7 @@ class Graph:
                 for neighbour in self.getNeighbours(pos):
                     DFS_helper(neighbour)
         
-        self.reference = {node:num for num, node in enumerate(self.graph)}
+        self.reference = {node:num for num, node in enumerate(self.listOfNodes())}
         self.visited = [False for i in self.listOfNodes()]
         self.order = []
         DFS_helper(position)
@@ -148,20 +148,31 @@ class Graph:
                 return False
         return True
 
-    def BFS(self, start, end):
-        pass
+    def BFS(self, start):
+        self.visited = []
+        self.queue = Queue()
+
+        self.queue.enQueue(start)
+        while not(self.queue.is_empty()):
+            current = self.queue.deQueue()
+            for neighbor in self.getNeighbours(current):
+                if neighbor not in self.visited:
+                    self.queue.enQueue(neighbor)
+            self.visited.append(current)
+        return self.visited
+
 
 print('----------------------Exercise 1-----------------------') #Depth First Search
 #Algorithm is in the Graph Class
+#
 G1 = Graph()
 
 G1.addNodes([0, 1, 2, 3, 4, 5])
 G1.addEdges([(0,1,1), (0,2,1), (1,2,1), (1,3,1), (2,4,1), (3,4,1), (3,5,1), (4,5,1)], True)
 
-for node in G1.listOfNodes():
-    print(f'If Start Node = {node} : Order of Visited Vertices = {G1.DFS(node)}')
-print()
-
+print('DFS')
+print(f'Start Node {0}: {G1.DFS(0)}')
+#
 print('----------------------Exercise 2-----------------------') #Detecing Cycles between list of N airports
 #
 airports = Graph()
@@ -170,12 +181,15 @@ airports.addEdges([('Austin', 'Dallas', 200), ('Austin', 'Houston', 160), ('Atla
 
 print(airports.isCyclic(['Austin','Houston','Atlanta','Washington','Dallas']))
 print(airports.isCyclic(['Austin','Houston','Atlanta','Washington']))
-print()
-
+#
 print('----------------------Exercise 3-----------------------') #Breadth First Search
+#Algorithm is in the Graph Class
 #
 G2 = Graph()
 G2.addNodes(['S', 1, 2, 3, 4, 5, 6, 7])
 G2.addEdges([('S',1,1), ('S',2,1), (1,3,1), (1,4,1), (1,5,1), (2,6,1), (6,7,1)], True)
 
-pprint(G2.displayGraph())
+print('BFS')
+print(f'Start Node S: {G2.BFS("S")}')
+#
+print('----------------------Exercise 4-----------------------') #Breadth First Search
