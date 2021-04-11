@@ -11,6 +11,18 @@ class Queue:
     def is_empty(self):
         return self.q == []
 
+class Stack:
+    def __init__(self):
+        self.stack = [] 
+    def push(self, item):
+        self.stack.append(item)
+    def pop(self):
+        return self.stack.pop()
+    def top(self):
+        return self.stack[-1]
+    def is_empty(self):
+        return self.stack == []
+
 class Graph:
     def __init__(self):
         self.graph = {}
@@ -126,37 +138,39 @@ class Graph:
                 matrix[reference[node]][reference[edges[0]]] = edges[-1]
         return matrix
 
-    def DFS(self, position):
-        def DFS_helper(pos):
-            if self.visited[self.reference[pos]]: return
-            else:
-                self.visited[self.reference[pos]] = True
-                self.order.append(pos)
-                for neighbour in self.getNeighbours(pos):
-                    DFS_helper(neighbour)
-        
-        self.reference = {node:num for num, node in enumerate(self.listOfNodes())}
-        self.visited = [False for i in self.listOfNodes()]
-        self.order = []
-        DFS_helper(position)
-        return self.order
+    def DFS(self, start):
+        stack = Stack()
+        stack.push(start)
+        visited = []
 
-    def isCyclic(self, lst):
-        for node in range(len(lst)):
-            if lst[node] not in self.getOutNeighbours(lst[node-1]):
+        while not(stack.is_empty()):
+            current = stack.pop()
+            for neighbour in self.getNeighbours(current):
+                if neighbour not in visited:
+                    stack.push(neighbour)
+            visited.append(current)
+        return visited
+
+
+    def check_cycles(self, cycles):
+        dfs = self.DFS(cycles[0])
+        for i in range(len(cycles)):
+            if cycles[i] != dfs[i]:
                 return False
+        if cycles[0] not in self.getOutNeighbours(cycles[-1]):
+            return False
         return True
 
     def BFS(self, start):
-        visited = []
         queue = Queue()
         queue.enQueue(start)
+        visited = []
 
         while not(queue.is_empty()):
             current = queue.deQueue()
-            for neighbor in self.getNeighbours(current):
-                if neighbor not in visited:
-                    queue.enQueue(neighbor)
+            for neighbour in self.getNeighbours(current):
+                if neighbour not in visited:
+                    queue.enQueue(neighbour)
             visited.append(current)
         return visited
 
@@ -209,7 +223,7 @@ G1.addNodes([0, 1, 2, 3, 4, 5])
 G1.addEdges([(0,1,1), (0,2,1), (1,2,1), (1,3,1), (2,4,1), (3,4,1), (3,5,1), (4,5,1)], True)
 
 print('DFS')
-print(f'Start Node {0}: {G1.DFS(0)}')
+print(f'Start Node 0: {G1.DFS(0)}')
 #
 print('----------------------Exercise 2-----------------------') #Detecing Cycles between list of N airports
 #Algorithm is in the Graph Class
@@ -220,8 +234,8 @@ airports.addEdges([('Austin', 'Dallas', 200), ('Austin', 'Houston', 160), ('Atla
                     ('Chicago', 'Denver', 1000), ('Dallas', 'Austin', 200), ('Dallas', 'Denver', 780), ('Dallas', 'Chicago', 900), ('Denver', 'Chicago', 1000), 
                     ('Denver', 'Atlanta', 1400), ('Houston', 'Atlanta', 800), ('Washington', 'Atlanta', 600), ('Washington', 'Dallas', 1300)], True)
 
-print(airports.isCyclic(['Austin','Houston','Atlanta','Washington','Dallas']))
-print(airports.isCyclic(['Austin','Houston','Atlanta','Washington']))
+print(airports.check_cycles(['Austin','Houston','Atlanta','Washington','Dallas']))
+print(airports.check_cycles(['Austin','Houston','Atlanta','Washington']))
 #
 print('----------------------Exercise 3-----------------------') #Breadth First Search
 #Algorithm is in the Graph Class
