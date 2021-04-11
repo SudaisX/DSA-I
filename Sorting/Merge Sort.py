@@ -1,3 +1,32 @@
+def mergeSort(arr):
+    if len(arr) < 2:
+        return arr
+    else:
+        a = arr[:len(arr)//2]
+        b = arr[len(arr)//2:]
+
+        a = mergeSort(a)
+        b = mergeSort(b)
+        c = []
+
+        i = 0
+        j = 0
+
+        while i < len(a) and j < len(b):
+            if a[i] < b[j]:
+                c.append(a[i])
+                i = i + 1
+            else:
+                c.append(b[j])
+                j = j + 1
+                
+        c += a[i:]
+        c += b[j:]
+    return c
+
+testList = [1,3,5,7,2,6,25,18,13]
+print(mergeSort(testList))
+
 # def merge(left, right):
 #     result = []
 #     i,j = 0,0
@@ -28,35 +57,6 @@
 #         return merge(left, right)
         
 
-
-testList = [1,3,5,7,2,6,25,18,13]
-
-def mergeSort(arr):
-    if len(arr) < 2:
-        return arr
-    else:
-        a = arr[:len(arr)//2]
-        b = arr[len(arr)//2:]
-
-        a = mergeSort(a)
-        b = mergeSort(b)
-        c = []
-
-        i = 0
-        j = 0
-
-        while i < len(a) and j < len(b):
-            if a[i] < b[j]:
-                c.append(a[i])
-                i = i + 1
-            else:
-                c.append(b[j])
-                j = j + 1
-        c += a[i:]
-        c += b[j:]
-    return c
-
-print(mergeSort(testList))
 
 #print(merge_sort(testList))
 

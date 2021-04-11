@@ -13,5 +13,6 @@ def insertion_sort(lst):
         
         lst[curr_pos] = curr_val
         print(lst)
-        
-insertion_sort(lst)
+
+lst = [1,3,5,7,2,6,25,18,13]
+insertion_sort([1,3,5,7,2,6,25,18,13])
