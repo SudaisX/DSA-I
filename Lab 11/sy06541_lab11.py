@@ -14,7 +14,6 @@ class Queue:
 class Graph:
     def __init__(self):
         self.graph = {}
-        self.directed = False
 
     def addNodes(self, nodes):
         for node in nodes:
@@ -149,18 +148,57 @@ class Graph:
         return True
 
     def BFS(self, start):
-        self.visited = []
-        self.queue = Queue()
+        visited = []
+        queue = Queue()
+        queue.enQueue(start)
 
-        self.queue.enQueue(start)
-        while not(self.queue.is_empty()):
-            current = self.queue.deQueue()
+        while not(queue.is_empty()):
+            current = queue.deQueue()
             for neighbor in self.getNeighbours(current):
-                if neighbor not in self.visited:
-                    self.queue.enQueue(neighbor)
-            self.visited.append(current)
-        return self.visited
+                if neighbor not in visited:
+                    queue.enQueue(neighbor)
+            visited.append(current)
+        return visited
 
+    def nodes_of_level(self, level):
+        queue = Queue()
+        queue.enQueue(self.listOfNodes()[0])
+        
+        visited = []
+        levels = {node:0 for node in self.listOfNodes()}
+
+        while not(queue.is_empty()):
+            current = queue.deQueue()
+            for neighbour in self.getNeighbours(current):
+                if neighbour not in visited:
+                    queue.enQueue(neighbour)
+                    levels[neighbour] = levels[current] + 1
+            visited.append(current)
+        
+        level_nodes = []
+        for node in levels:
+            if levels[node] == level:
+                level_nodes.append(node)
+        return level_nodes
+
+    def get_node_level(self, node_level):
+        queue = Queue()
+        queue.enQueue(self.listOfNodes()[0])
+        
+        visited = []
+        levels = {node:0 for node in self.listOfNodes()}
+
+        while not(queue.is_empty()):
+            current = queue.deQueue()
+            for neighbour in self.getNeighbours(current):
+                if neighbour not in visited:
+                    queue.enQueue(neighbour)
+                    levels[neighbour] = levels[current] + 1
+            visited.append(current)
+        
+        for node in levels:
+            if node == node_level:
+                return levels[node]
 
 print('----------------------Exercise 1-----------------------') #Depth First Search
 #Algorithm is in the Graph Class
@@ -174,10 +212,13 @@ print('DFS')
 print(f'Start Node {0}: {G1.DFS(0)}')
 #
 print('----------------------Exercise 2-----------------------') #Detecing Cycles between list of N airports
+#Algorithm is in the Graph Class
 #
 airports = Graph()
 airports.addNodes(['Austin', 'Atlanta', 'Chicago', 'Dallas', 'Denver', 'Houston', 'Washington'])
-airports.addEdges([('Austin', 'Dallas', 200), ('Austin', 'Houston', 160), ('Atlanta', 'Washington', 600), ('Atlanta', 'Houston', 800), ('Chicago', 'Denver', 1000), ('Dallas', 'Austin', 200), ('Dallas', 'Denver', 780), ('Dallas', 'Chicago', 900), ('Denver', 'Chicago', 1000), ('Denver', 'Atlanta', 1400), ('Houston', 'Atlanta', 800), ('Washington', 'Atlanta', 600), ('Washington', 'Dallas', 1300)], True)
+airports.addEdges([('Austin', 'Dallas', 200), ('Austin', 'Houston', 160), ('Atlanta', 'Washington', 600), ('Atlanta', 'Houston', 800),
+                    ('Chicago', 'Denver', 1000), ('Dallas', 'Austin', 200), ('Dallas', 'Denver', 780), ('Dallas', 'Chicago', 900), ('Denver', 'Chicago', 1000), 
+                    ('Denver', 'Atlanta', 1400), ('Houston', 'Atlanta', 800), ('Washington', 'Atlanta', 600), ('Washington', 'Dallas', 1300)], True)
 
 print(airports.isCyclic(['Austin','Houston','Atlanta','Washington','Dallas']))
 print(airports.isCyclic(['Austin','Houston','Atlanta','Washington']))
@@ -192,4 +233,22 @@ G2.addEdges([('S',1,1), ('S',2,1), (1,3,1), (1,4,1), (1,5,1), (2,6,1), (6,7,1)],
 print('BFS')
 print(f'Start Node S: {G2.BFS("S")}')
 #
-print('----------------------Exercise 4-----------------------') #Breadth First Search
+print('----------------------Exercise 4a-----------------------')
+#Algorithm is in the Graph Class
+#
+print(f'Node level 0: {G2.nodes_of_level(0)}')
+print(f'Node level 1: {G2.nodes_of_level(1)}')
+print(f'Node level 2: {G2.nodes_of_level(2)}')
+print(f'Node level 3: {G2.nodes_of_level(3)}')
+#
+print('----------------------Exercise 4b-----------------------')
+#Algorithm is in the Graph Class
+#
+print(f'Level of node S: {G2.get_node_level("S")}')
+print(f'Level of node 1: {G2.get_node_level(1)}')
+print(f'Level of node 2: {G2.get_node_level(2)}')
+print(f'Level of node 3: {G2.get_node_level(3)}')
+print(f'Level of node 4: {G2.get_node_level(4)}')
+print(f'Level of node 5: {G2.get_node_level(5)}')
+print(f'Level of node 6: {G2.get_node_level(6)}')
+print(f'Level of node 7: {G2.get_node_level(7)}')
