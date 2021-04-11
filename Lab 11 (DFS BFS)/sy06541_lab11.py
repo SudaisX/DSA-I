@@ -151,7 +151,6 @@ class Graph:
             visited.append(current)
         return visited
 
-
     def check_cycles(self, cycles):
         dfs = self.DFS(cycles[0])
         for i in range(len(cycles)):
