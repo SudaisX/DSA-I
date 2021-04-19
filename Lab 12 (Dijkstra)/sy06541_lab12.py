@@ -105,8 +105,8 @@ edges = [('A', 'B', 5), ('A', 'D', 3), ('A', 'E', 6), ('B', 'C', 6),
 G1.addNodes(nodes)
 G1.addEdges(edges)
 
-print(G1.getShortestPath('A', 'G'))
-print()
+# print(G1.getShortestPath('A', 'G'))
+print(f'Shortest path from A to G is: \n{G1.getShortestPath("A", "G")}')
 #
 print('----------------------Exercise 1b-----------------------')
 #
