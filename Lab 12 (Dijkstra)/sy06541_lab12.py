@@ -1,6 +1,5 @@
 from pprint import pprint
 
-
 class PriorityQueue:
     def __init__(self):
         self.queue = []
@@ -26,6 +25,8 @@ class Graph:
     def addNodes(self, nodes):
         for node in nodes:
             self.graph[node] = []
+            self.reference = {node: num for num,
+                              node in enumerate(self.listOfNodes())}
 
     def listOfNodes(self):
         return [node for node in self.graph]
@@ -38,8 +39,6 @@ class Graph:
             for edge in edges:
                 self.graph[edge[0]].append((edge[1], edge[2]))
                 self.graph[edge[1]].append((edge[0], edge[2]))
-        self.reference = {node: num for num,
-                          node in enumerate(self.listOfNodes())}
 
     def getNeighbours(self, node):  # for undirected graphs
         neighbours = []
@@ -47,40 +46,8 @@ class Graph:
             neighbours.append(edges)
         return neighbours
 
-    def getInNeighbours(self, node):  # for directed graph
-        neighbours = []
-        for nodes in self.graph:
-            for edges in self.graph[nodes]:
-                if node == edges[0]:
-                    neighbours.append(nodes)
-        return neighbours
-
-    def getOutNeighbours(self, node):
-        neighbours = []
-        for edges in self.graph[node]:
-            neighbours.append(edges[0])
-        return neighbours
-
-    def getNearestNeighbour(self, node):
-        nearest_node = self.graph[node][0][0]
-        nearest_weight = self.graph[node][0][1]
-        for edges in self.graph[node]:
-            if edges[1] < nearest_weight:
-                nearest_node = edges[0]
-                nearest_weight = edges[1]
-        return nearest_node
-
-    def isNeighbour(self, node1, node2):
-        for edges in self.graph[node1]:
-            if edges[0] == node2:
-                return True
-        return False
-
     def displayGraph(self):
         return self.graph
-
-    def getShortestDistance(self, start, end):
-        return self.dijkstra(start)[0][self.reference[end]]
 
     def dijkstra(self, start):
         distance = [float('inf') for node in self.listOfNodes()]
@@ -122,9 +89,13 @@ class Graph:
         path.reverse()
         return path
 
+    def getShortestDistance(self, start, end):
+        return self.dijkstra(start)[0][self.reference[end]]
 
-# Depth First Search
+
+# Dijkstra
 print('----------------------Exercise 1a-----------------------')
+#
 G1 = Graph()
 
 nodes = [chr(i) for i in range(65, 72)]
@@ -135,3 +106,55 @@ G1.addNodes(nodes)
 G1.addEdges(edges)
 
 print(G1.getShortestPath('A', 'G'))
+print()
+#
+print('----------------------Exercise 1b-----------------------')
+#
+#i.
+cities = Graph()
+data = []
+nodes = []
+edges = []
+
+import csv
+with open('Lab 12 (Dijkstra)/connections.csv') as connections:
+    data_csv = csv.reader(connections)
+    counter = 0
+    for row in data_csv:
+        if counter == 0:
+            nodes = row
+            counter += 1
+        else:
+            data.append(row)
+
+for node in data:
+    city = node[0]
+    for edge in range(1, len(node)):
+        if int(node[edge]) != -1 and int(node[edge]) != 0:
+            edges.append((city, nodes[edge], int(node[edge])))
+
+cities.addNodes(nodes[1::])
+cities.addEdges(edges, True)
+
+#ii.
+start = 'Islamabad'
+end = 'Kaghan'
+
+print(f'Shortest path from {start} to {end} is: \n{cities.getShortestPath(start, end)}')
+print()
+print(f'Shortest distance from {start} to {end} is: \n{cities.getShortestDistance(start, end)}km.')
+
+#
+print('----------------------Exercise 2-----------------------')
+#
+G2 = Graph()
+
+nodes = [chr(i) for i in range(65, 72)]
+edges = [('A', 'B', 7), ('A', 'D', 2), ('A', 'E', 6), ('B', 'C', 3),
+         ('C', 'D', 2), ('C', 'G', 2), ('D', 'F', 8), ('E', 'F', 9), ('F', 'G', 4)]
+
+G2.addNodes(nodes)
+G2.addEdges(edges)
+
+print(f'Shortest path from A to F is: \n{G2.getShortestPath("A", "F")}')
+print(f'Shortest path from A to B is: \n{G2.getShortestPath("A", "B")}')
