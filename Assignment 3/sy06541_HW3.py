@@ -311,9 +311,9 @@ def find_all_possible_paths_to_user(network, user_A, user_B, path=[]):
     paths = []
     for user in network[user_A][0]:
         if user not in path:
-            newpaths = find_all_possible_paths_to_user(network, user, user_B, path)
-            for newpath in newpaths:
-                paths.append(newpath)
+            temp_paths = find_all_possible_paths_to_user(network, user, user_B, path)
+            for temp_path in temp_paths:
+                paths.append(temp_path)
     return paths  
 
 from pprint import pprint
@@ -329,4 +329,4 @@ print(add_new_user(net, "Nick", ["India", "Italy"])) # True
 print(get_secondary_connections(net, "Marium"))
 print(count_common_connections(net, "Marium", "Usama"))
 print(find_path_to_patient(net, "Usama", "Zehra"))
-print(find_all_possible_paths_to_user(net, "Usama", "Zehra"))
+pprint(find_all_possible_paths_to_user(net, "Usama", "Zehra"))
