@@ -53,6 +53,22 @@ class BST:
             else:
                 return False
 
+    #Get tree height
+    def height(self):
+        if self.root == None: 
+            return 0
+        else:
+            return self.__height(self.root)
+
+    def __height(self, curr_node, curr_height=0):
+        if curr_node == None:
+            return curr_height
+        left_height = self.__height(curr_node.left, curr_height + 1)
+        right_height = self.__height(curr_node.right, curr_height + 1)
+        print(left_height, right_height)
+        return max(left_height, right_height)
+
+
     #Node with min value
     def minimum(self, key):
         return self.__minimum(key, self.root)
@@ -131,26 +147,10 @@ class BST:
             self.__postorder_traversal(curr.right)
             self.order.append((curr.value))
 
-    #Get tree height
-    def height(self):
-        if self.root == None: 
-            return 0
-        else:
-            return self.__height(self.root)
 
-    def __height(self, curr_node, curr_height=0):
-        if curr_node == None:
-            return curr_height
-        left_height = self.__height(curr_node.left, curr_height + 1)
-        right_height = self.__height(curr_node.right, curr_height + 1)
-        print(left_height, right_height)
-        return max(left_height, right_height)
 
-#Question 1
 bst = BST()
-#
-#----------------------Question 1a-----------------------#
-#
+
 bst.insert(68)
 bst.insert(88)
 bst.insert(61)
@@ -161,63 +161,5 @@ bst.insert(4)
 bst.insert(76)
 bst.insert(66)
 bst.insert(82)
-#
-#
-print('----------------------Question 1b-----------------------')
-# key = 50
-print(bst.exist(50))
 
-
-print('----------------------Question 1c-----------------------')
-#key = 49
-print(bst.exist(49))
-
-
-print('----------------------Question 1d-----------------------')
-# starting node = 68
-print(bst.minimum(68))
-
-
-print('----------------------Question 1e-----------------------')
-# starting node = 88
-print(bst.minimum(88))
-
-
-print('----------------------Question 1f-----------------------')
-# starting node = 68
-print(bst.maximum(68))
-
-
-print('----------------------Question 1g-----------------------')
-# starting node = 61
-print(bst.maximum(61))
-
-
-print('----------------------Question 1h-----------------------')
-# In order Traversal
-print(bst.inorder_traversal())
-
-
-print('----------------------Question 1i-----------------------')
-# Pre order traversal
-print(bst.preorder_traversal())
-
-
-print('----------------------Question 1j-----------------------')
-# Post order traversal
-print(bst.postorder_traversal())
-
-#----------------------Question 2-----------------------#
-#
-keys = ['begin', 'do', 'else', 'end', 'if', 'then', 'while']
-mid = len(keys)//2
-
-#Initialising the keywords tree
-keywords = BST()
-
-#Adding the middle value to the tree
-keywords.insert(keys[mid])
-
-#Adding the rest of the keywords into the tree
-for k in keys:
-    keywords.insert(k)
+print(bst.height())

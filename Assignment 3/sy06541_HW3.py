@@ -205,7 +205,7 @@ def get_secondary_connections(network, user):
     secondary_connections = []
     for connection in network[user][0]:
         if connection not in secondary_connections:
-            secondary_connections.append(connection)
+            secondary_connections.append(network[connection][0])
     return secondary_connections
 
 # ----------------------------------------------------------------------------- 	
