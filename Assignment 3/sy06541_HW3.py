@@ -205,8 +205,9 @@ def get_secondary_connections(network, user):
     secondary_connections = []
     for connection in network[user][0]:
         if connection not in secondary_connections:
-            secondary_connections.append(network[connection][0])
-    return secondary_connections
+            secondary_connections += network[connection][0]
+            # secondary_connections.append(network[connection][0])
+    return list(set(secondary_connections))
 
 # ----------------------------------------------------------------------------- 	
 # count_common_connections(network, user_A, user_B): [10 Points]
@@ -326,7 +327,7 @@ print(get_countries_traveled(net, "Usama"))
 print(add_connection(net, "Usama", "Samar"))
 print(add_new_user(net, "Aaliya", []))
 print(add_new_user(net, "Nick", ["India", "Italy"])) # True
-print(get_secondary_connections(net, "Marium"))
+print(get_secondary_connections(net, "Usama"))
 print(count_common_connections(net, "Marium", "Usama"))
 print(find_path_to_patient(net, "Usama", "Zehra"))
 pprint(find_all_possible_paths_to_user(net, "Usama", "Zehra"))
